@@ -5,7 +5,7 @@
 
 * Example
 
-#+begin_src plantuml :file example.png :results replace output graphics :exports both :tangle no
+#+begin_src plantuml :file img/example.png :results replace output graphics :exports both :tangle no
   @startuml
   !include git.plantuml
 
@@ -18,7 +18,7 @@
 #+end_src
 
 #+RESULTS:
-[[file:example.png]]
+[[file:img/example.png]]
 
 * Source
 ** Header
