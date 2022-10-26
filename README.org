@@ -111,9 +111,11 @@
   !include git.plantuml
 
   $declareCommit(1)
-  $commit(2, 1)
+  $commit(e1, 1)
+  $commit(m, 1)
 
-  $branchLabel(2, experiment)
+  $branchLabel(m, master)
+  $branchLabel(e1, experiment)
   @enduml
 #+end_src
 
