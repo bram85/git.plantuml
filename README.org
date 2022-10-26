@@ -109,7 +109,7 @@
 #+begin_src plantuml
   !procedure $branchLabel($commit, $name)
   rectangle "$name" <<branchLabel>>
-  $commit .right. [$name] #grey
+  $commit .[norank]right. [$name] #grey
   !endprocedure
 #+end_src
 
@@ -138,14 +138,14 @@ Assigns a tag label to a commit. The commit has to be added with a =$commit= or 
 
 #+name: procedure-tag
 #+begin_src plantuml
-    !procedure $tag($commit, $name)
-    together {
-            rectangle "$name" <<tag>>
-            $commit .[hidden]. [$name] #grey
-            $commit .. [$name] #grey
-            $commit .[hidden]. [$name] #grey
-    }
-    !endprocedure
+  !procedure $tag($commit, $name)
+  together {
+          rectangle "$name" <<tag>>
+          $commit .[norank,hidden]. [$name] #grey
+          $commit .[norank]. [$name] #grey
+          $commit .[norank,hidden]. [$name] #grey
+  }
+  !endprocedure
 #+end_src
 
 *** Branch
