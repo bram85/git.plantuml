@@ -127,7 +127,7 @@
 #+begin_src plantuml
   !procedure $branchLabel($commit, $name)
   rectangle "$name" <<branchLabel>>
-  $commit .[norank]right. [$name] #grey
+  $commit .[norank]. [$name] #grey
   !endprocedure
 #+end_src
 

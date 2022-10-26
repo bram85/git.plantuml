@@ -46,7 +46,7 @@ $declareCommit($name, $label)
 
 !procedure $branchLabel($commit, $name)
 rectangle "$name" <<branchLabel>>
-$commit .[norank]right. [$name] #grey
+$commit .[norank]. [$name] #grey
 !endprocedure
 !procedure $tag($commit, $name)
 together {
