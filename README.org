@@ -104,7 +104,23 @@
 #+end_src
 
 *** Branch label
+**** Usage
 
+#+begin_src plantuml :file img/branch-label.png :results replace output graphics :exports both :tangle no
+  @startuml
+  !include git.plantuml
+
+  $declareCommit(1)
+  $commit(2, 1)
+
+  $branchLabel(2, experiment)
+  @enduml
+#+end_src
+
+#+RESULTS:
+[[file:img/branch-label.png]]
+
+**** Source
 #+name: procedure-branch-label
 #+begin_src plantuml
   !procedure $branchLabel($commit, $name)
