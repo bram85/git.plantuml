@@ -9,11 +9,12 @@
   @startuml
   !include git.plantuml
 
-  $branch(master, 5)
+  $branch_start(master, 5)
+  $tag(master3, v0.1)
+  $branch_stop()
+
   $branch(feature, 3, master, 2, master, 4)
   $branch(unfinished, 2, master, 2)
-
-  $tag(master3, v0.1)
   @enduml
 #+end_src
 
