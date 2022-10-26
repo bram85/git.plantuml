@@ -56,7 +56,7 @@ together {
         $commit .[norank,hidden]. [$name] #grey
 }
 !endprocedure
-!procedure $branch($name, $numCommits, $fromBranch1="", $fromCommit1="", $toBranch="", $toCommit="", $fromBranch2="", $fromCommit2="")
+!procedure $branch_start($name, $numCommits, $fromBranch1="", $fromCommit1="", $toBranch="", $toCommit="", $fromBranch2="", $fromCommit2="")
 rectangle {
         !$counter = $numCommits
         !while $counter != 0
@@ -90,6 +90,14 @@ rectangle {
 
         !$counter = $counter - 1
         !endwhile
+!endprocedure
+
+!procedure $branch_stop()
 }
+!endprocedure
+
+!procedure $branch($name, $numCommits, $fromBranch1="", $fromCommit1="", $toBranch="", $toCommit="", $fromBranch2="", $fromCommit2="")
+$branch_start($name, $numCommits, $fromBranch1, $fromCommit1, $toBranch, $toCommit, $fromBranch2, $fromCommit2)
+$branch_stop()
 !endprocedure
 @enduml
