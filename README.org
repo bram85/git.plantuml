@@ -1,7 +1,7 @@
 #+title: Draw git branch trees with PlantUML
 #+author: Bram Schoenmakers
 #+options: toc:2 tasks:nil
-#+property: header-args :noweb no :tangle "git.plantuml" :results silent :exports code
+#+property: header-args:plantuml :file /dev/null :noweb no :tangle no :results silent :exports code
 
 * Example
 
@@ -21,10 +21,20 @@
 [[file:example.png]]
 
 * Source
+** Header
 
-#+begin_src plantuml :file /dev/null
+#+begin_src plantuml :noweb yes :tangle git.plantuml
   @startuml
+  <<style>>
+  <<functions>>
+  <<procedures>>
+  @enduml
+#+end_src
 
+** Style
+
+#+name: style
+#+begin_src plantuml
   hide stereotype
 
   skinparam interface {
@@ -37,100 +47,118 @@
           backgroundColor<<tag>> Yellow
           fontSize 11
   }
+#+end_src
 
-  ''''''''''
-  ' COMMIT '
-  ''''''''''
+** Functions
 
+#+name: functions
+#+begin_src plantuml
   !function $commitName($branch, $number)
   !return %string($branch + $number)
   !endfunction
+#+end_src
 
-  !procedure $declareCommit($name, $label="")
-  !if ($label != "")
-  circle $label as $name
-  !else
-  circle $name
-  !endif
-  !endprocedure
+** Procedures
+#+name: procedures
+#+begin_src plantuml :noweb yes
+  <<procedure-declare-commit>>
+  <<procedure-branch-label>>
+  <<procedure-tag>>
+  <<procedure-branch>>
+#+end_src
 
-  ' $parent1 and $parent2 are supposed to be declared
-  !procedure $commit($name, $parent1, $parent2="", $label="")
-  $declareCommit($name, $label)
+** Commit
 
-  !if ($parent1 != "")
-  ($parent1) -up-> ($name)
-  !endif
+#+name: procedure-declare-commit
+#+begin_src plantuml
+    !procedure $declareCommit($name, $label="")
+    !if ($label != "")
+    circle $label as $name
+    !else
+    circle $name
+    !endif
+    !endprocedure
 
-  !if ($parent2 != "")
-  ($parent2) -up-> ($name)
-  !endif
+    ' $parent1 and $parent2 are supposed to be declared
+    !procedure $commit($name, $parent1, $parent2="", $label="")
+    $declareCommit($name, $label)
 
-  !endprocedure
+    !if ($parent1 != "")
+    ($parent1) -up-> ($name)
+    !endif
 
-  ''''''''''''''''
-  ' BRANCH LABEL '
-  ''''''''''''''''
+    !if ($parent2 != "")
+    ($parent2) -up-> ($name)
+    !endif
 
-  ' make sure that the commit is already part of the tree (using $commit) or declared
+    !endprocedure
+
+#+end_src
+
+** Branch label
+
+#+name: procedure-branch-label
+#+begin_src plantuml
   !procedure $branchLabel($commit, $name)
   rectangle "$name" <<branchLabel>>
   $commit .right. [$name] #grey
   !endprocedure
+#+end_src
 
-  '''''''''''''
-  ' TAG LABEL '
-  '''''''''''''
+** Tag
 
-  ' make sure that the commit is already part of the tree (using $commit) or declared
-  !procedure $tag($commit, $name)
-  together {
-          rectangle "$name" <<tag>>
-          $commit .[hidden]. [$name] #grey
-          $commit .. [$name] #grey
-          $commit .[hidden]. [$name] #grey
-  }
-  !endprocedure
+Make sure that the commit is already part of the tree (using $commit) or declared
 
-  ''''''''''
-  ' BRANCH '
-  ''''''''''
+#+name: procedure-tag
+#+begin_src plantuml
+    !procedure $tag($commit, $name)
+    together {
+            rectangle "$name" <<tag>>
+            $commit .[hidden]. [$name] #grey
+            $commit .. [$name] #grey
+            $commit .[hidden]. [$name] #grey
+    }
+    !endprocedure
+#+end_src
 
-  !procedure $branch($name, $numCommits, $fromBranch1="", $fromCommit1="", $toBranch="", $toCommit="", $fromBranch2="", $fromCommit2="")
-  rectangle {
-          !$counter = $numCommits
-          !while $counter != 0
-          !$parentCommit = %string($name + ($counter - 1))
-          !$thisCommit = %string($name + $counter)
+** Branch
 
-          $declareCommit($thisCommit, $counter)
-          !if ($counter > 1)
-          $declareCommit($parentCommit, %string($counter - 1))
-          $commit($thisCommit, $parentCommit, $label=$counter)
-          !endif
+#+name: procedure-branch
+#+begin_src plantuml
+    !procedure $branch($name, $numCommits, $fromBranch1="", $fromCommit1="", $toBranch="", $toCommit="", $fromBranch2="", $fromCommit2="")
+    rectangle {
+            !$counter = $numCommits
+            !while $counter != 0
+            !$parentCommit = %string($name + ($counter - 1))
+            !$thisCommit = %string($name + $counter)
 
-          !if ($counter == $numCommits)
-          !if ($toBranch != "")
-          $commit($commitName($toBranch, $toCommit), $thisCommit, $label=$toCommit)
-          !endif
+            $declareCommit($thisCommit, $counter)
+            !if ($counter > 1)
+            $declareCommit($parentCommit, %string($counter - 1))
+            $commit($thisCommit, $parentCommit, $label=$counter)
+            !endif
 
-          $branchLabel($thisCommit, $name)
-          !endif
+            !if ($counter == $numCommits)
+            !if ($toBranch != "")
+            $commit($commitName($toBranch, $toCommit), $thisCommit, $label=$toCommit)
+            !endif
 
-          !if ($counter == 1 && $fromBranch1 != "")
-          $declareCommit($commitName($fromBranch1, $fromCommit1), $fromCommit1)
+            $branchLabel($thisCommit, $name)
+            !endif
+
+            !if ($counter == 1 && $fromBranch1 != "")
+            $declareCommit($commitName($fromBranch1, $fromCommit1), $fromCommit1)
 
 
-          !if ($fromBranch2 != "")
-          $declareCommit($commitName($fromBranch2, $fromCommit2), $fromCommit2)
-          !endif
+            !if ($fromBranch2 != "")
+            $declareCommit($commitName($fromBranch2, $fromCommit2), $fromCommit2)
+            !endif
 
-          $commit($thisCommit, $commitName($fromBranch1, $fromCommit1), $commitName($fromBranch2, $fromCommit2), $counter)
-          !endif
+            $commit($thisCommit, $commitName($fromBranch1, $fromCommit1), $commitName($fromBranch2, $fromCommit2), $counter)
+            !endif
 
-          !$counter = $counter - 1
-          !endwhile
-  }
-  !endprocedure
-  @enduml
+            !$counter = $counter - 1
+            !endwhile
+    }
+    !endprocedure
 #+end_src

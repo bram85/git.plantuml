@@ -1,5 +1,4 @@
 @startuml
-
 hide stereotype
 
 skinparam interface {
@@ -12,15 +11,9 @@ skinparam rectangle {
         backgroundColor<<tag>> Yellow
         fontSize 11
 }
-
-''''''''''
-' COMMIT '
-''''''''''
-
 !function $commitName($branch, $number)
 !return %string($branch + $number)
 !endfunction
-
 !procedure $declareCommit($name, $label="")
 !if ($label != "")
 circle $label as $name
@@ -43,34 +36,18 @@ $declareCommit($name, $label)
 
 !endprocedure
 
-''''''''''''''''
-' BRANCH LABEL '
-''''''''''''''''
-
-' make sure that the commit is already part of the tree (using $commit) or declared
 !procedure $branchLabel($commit, $name)
 rectangle "$name" <<branchLabel>>
 $commit .right. [$name] #grey
 !endprocedure
-
-'''''''''''''
-' TAG LABEL '
-'''''''''''''
-
-' make sure that the commit is already part of the tree (using $commit) or declared
 !procedure $tag($commit, $name)
 together {
         rectangle "$name" <<tag>>
         $commit .[hidden]. [$name] #grey
         $commit .. [$name] #grey
         $commit .[hidden]. [$name] #grey
-        }
+}
 !endprocedure
-
-''''''''''
-' BRANCH '
-''''''''''
-
 !procedure $branch($name, $numCommits, $fromBranch1="", $fromCommit1="", $toBranch="", $toCommit="", $fromBranch2="", $fromCommit2="")
 rectangle {
         !$counter = $numCommits
@@ -80,8 +57,8 @@ rectangle {
 
         $declareCommit($thisCommit, $counter)
         !if ($counter > 1)
-          $declareCommit($parentCommit, %string($counter - 1))
-          $commit($thisCommit, $parentCommit, $label=$counter)
+        $declareCommit($parentCommit, %string($counter - 1))
+        $commit($thisCommit, $parentCommit, $label=$counter)
         !endif
 
         !if ($counter == $numCommits)
@@ -100,7 +77,7 @@ rectangle {
         $declareCommit($commitName($fromBranch2, $fromCommit2), $fromCommit2)
         !endif
 
-          $commit($thisCommit, $commitName($fromBranch1, $fromCommit1), $commitName($fromBranch2, $fromCommit2), $counter)
+        $commit($thisCommit, $commitName($fromBranch1, $fromCommit1), $commitName($fromBranch2, $fromCommit2), $counter)
         !endif
 
         !$counter = $counter - 1
