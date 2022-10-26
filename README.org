@@ -115,7 +115,26 @@
 
 *** Tag
 
-Make sure that the commit is already part of the tree (using $commit) or declared
+Assigns a tag label to a commit. The commit has to be added with a =$commit= or a =$declareCommit= before.
+
+**** Usage
+
+#+begin_src plantuml :file img/tag.png :results replace output graphics :exports both :tangle no
+  @startuml
+  !include git.plantuml
+
+  $declareCommit(1)
+  $declareCommit(2)
+  $commit(2, 1)
+
+  $tag(2, "v0.1")
+  @enduml
+#+end_src
+
+#+RESULTS:
+[[file:img/tag.png]]
+
+**** Source
 
 #+name: procedure-tag
 #+begin_src plantuml
