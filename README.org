@@ -23,7 +23,7 @@
 * Source
 ** Header
 
-#+begin_src plantuml :noweb yes :tangle git.plantuml
+#+begin_src plantuml :noweb no-export :tangle git.plantuml
   @startuml
   <<style>>
   <<functions>>
@@ -60,7 +60,7 @@
 
 ** Procedures
 #+name: procedures
-#+begin_src plantuml :noweb yes
+#+begin_src plantuml :noweb no-export :exports none
   <<procedure-declare-commit>>
   <<procedure-branch-label>>
   <<procedure-tag>>
