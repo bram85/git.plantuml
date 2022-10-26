@@ -140,7 +140,6 @@ Assigns a tag label to a commit. The commit has to be added with a =$commit= or 
   !include git.plantuml
 
   $declareCommit(1)
-  $declareCommit(2)
   $commit(2, 1)
 
   $tag(2, "v0.1")
