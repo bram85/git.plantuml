@@ -5,7 +5,7 @@
 
 * Example
 
-#+begin_src plantuml :file example.png :results replace output graphics :exports both :tangle no
+#+begin_src plantuml :file example.png :results replace output graphics :exports both :tangle no :cache yes
   @startuml
   !include git.plantuml
 
@@ -17,7 +17,7 @@
   @enduml
 #+end_src
 
-#+RESULTS:
+#+RESULTS[4f4ba30d62311f5268538bd0ed5a1bc99cf6d4cb]:
 [[file:example.png]]
 
 * Source
