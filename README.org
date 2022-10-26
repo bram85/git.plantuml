@@ -1,7 +1,7 @@
 #+title: Draw git branch trees with PlantUML
 #+author: Bram Schoenmakers
 #+options: toc:2 tasks:nil
-#+property: header-args:plantuml :file /dev/null :noweb no :tangle no :results silent :exports code
+#+property: header-args:plantuml :file /dev/null :noweb no :tangle no :results silent :exports code :tasks nil
 
 * Example
 
@@ -131,6 +131,14 @@
   !endprocedure
 #+end_src
 
+**** TODO Use notes instead of rectangles
+:PROPERTIES:
+:CREATED:  <2022-10-26 Wed 17:37>
+:END:
+
+To ease the layouting.
+
+Adjust note color accordingly.
 *** Tag
 
 Assigns a tag label to a commit. The commit has to be added with a =$commit= or a =$declareCommit= before.
@@ -164,6 +172,13 @@ Assigns a tag label to a commit. The commit has to be added with a =$commit= or 
   }
   !endprocedure
 #+end_src
+
+**** TODO Use notes instead of rectangles
+:PROPERTIES:
+:CREATED:  <2022-10-26 Wed 17:37>
+:END:
+
+Adjust note color accordingly.
 
 *** Branch
 
@@ -214,6 +229,13 @@ Assigns a tag label to a commit. The commit has to be added with a =$commit= or 
   $branch_stop()
   !endprocedure
 #+end_src
+
+**** TODO Accept JSON as argument
+:PROPERTIES:
+:CREATED:  <2022-10-26 Wed 17:38>
+:END:
+
+Given the complexity and the amount of configurability, pass it on as a single JSON structure instead of /n/ arguments.
 
 * License
 
